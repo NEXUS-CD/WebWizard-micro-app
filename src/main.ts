@@ -9,15 +9,28 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
+import type { App as VueApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
 import { qiankunWindow, renderWithQiankun } from 'vite-plugin-qiankun/dist/helper'
-let app: any
+import { createPinia } from 'pinia'
+
+// qiankunWindow.customxxx = 'ssss'
+
+if (qiankunWindow.__POWERED_BY_QIANKUN__) {
+  //   console.log('我正在作为子应用运行')
+}
+let app: VueApp
 function render(props: any) {
-  const { container } = props
+  const { container, ...others } = props
   app = createApp(App)
-  app.use(router).mount(container instanceof Element ? container.querySelector('#app') : container)
+  const pinia = createPinia()
+  app.provide('globalState', others)
+  app
+    .use(pinia)
+    .use(router)
+    .mount(container instanceof Element ? container.querySelector('#app') : container)
 }
 if (!qiankunWindow.__POWERED_BY_QIANKUN__) {
   render({ container: '#app' })
