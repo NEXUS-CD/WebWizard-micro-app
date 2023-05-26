@@ -8,6 +8,7 @@
  */
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../pages/home/HomePage.vue'
+import AboutPage from '@/pages/about/AboutPage.vue'
 
 const router = createRouter({
   history: createWebHistory('/micro-app'),
@@ -16,7 +17,8 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: Home
-    }
+    },
+    { path: '/about', name: 'about', component: AboutPage }
     // {
     //   path: '/about',
     //   name: 'about',
